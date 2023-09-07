@@ -29,7 +29,13 @@
                             <a class="nav-link text-dark" href="frmListarClientes.jsp">Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">Provedores</a>
+                            <a class="nav-link text-dark" href="frmListarProvedores.jsp">Provedores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href=#>Compra</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href=#>Venta</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" href=#>Facturación</a>

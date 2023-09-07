@@ -1,19 +1,21 @@
 <%-- 
-    Document   : frmClientes
-    Created on : 06-sep-2023, 13:01:04
+    Document   : frmProvedores
+    Created on : 06-sep-2023, 17:01:38
     Author     : Anthony Rodriguez Valverde
 --%>
 
-<%@page import="Logica.LNClientes"%>
-<%@page import="Entidades.Clientes"%>
+<%@page import="Logica.LNProvedores"%>
+<%@page import="Entidades.Provedores"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Agregar o modificar clientes</title>
+        <title>Provedores</title>
+        <!--Bootstrap-->
         <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="CSS/estilos.css" rel="stylesheet" type="text/css"/>
+        <!--FontAwesome-->
+        <link href="lib/fontawesome-free-5.14.0-web/css/all.min.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
     <header>
@@ -45,27 +47,27 @@
             </div>
         </nav>
     </header>
-        
-        <div class="container">
+    
+     <div class="container">
             <div class="row">
                 <div class="col-md-6 mx-auto">
                     <div class="card-header">
-                        <h1>Cliente</h1>
+                        <h1>Provedores</h1>
                     </div><br>
                     <%
-                        String id = request.getParameter("idCrearModificar");
+                        String id = request.getParameter("idCrearModificar2");
                         int codigo = Integer.parseInt(id);
-                        Clientes cliente;
-                        LNClientes logica = new LNClientes();
+                        Provedores cliente;
+                        LNProvedores logica = new LNProvedores();
                         if(codigo>0){
-                            cliente = logica.ObtenerCliente("ID_CLIENTE ="+id);
+                            cliente = logica.Obtener("ID_PROVEEDOR ="+id);
                         }else{
-                            cliente = new Clientes();
+                            cliente = new Provedores();
                         }
 
                     %>
                     
-                    <form action="CrearModificarCliente" method="post" id="form-AgregarModificar">
+                    <form action="CrearModificarProvedor" method="post" id="form-AgregarModificar2">
                         <div class="form-group">
                             
                                 <%if(codigo>0){%>
@@ -84,23 +86,6 @@
                    value="<%=cliente.getNombre()%>" class="form-control">
         </div>
         
-        <div class="form-group">
-            <label for="txtApellido1" class="control-label">Apellido 1</label>
-            <input type="text" id="txtApellido1" name="txtApellido1"
-                   value="<%=cliente.getApellido1()%>" class="form-control">
-        </div>
-        
-        <div class="form-group">
-            <label for="txtApellido2" class="control-label">Apellido 2</label>
-            <input type="text" id="txtApellido2" name="txtApellido2"
-                   value="<%=cliente.getApellido2()%>" class="form-control">
-        </div>
-        
-        <div class="form-group">
-            <label for="txtCedula" class="control-label">Cedula</label>
-            <input type="text" id="txtCedula" name="txtCedula"
-                   value="<%=cliente.getCedula()%>" class="form-control">
-        </div>
         
         <div class="form-group">
             <label for="txtTelefono" class="control-label">Telefono</label>
@@ -116,8 +101,8 @@
         
         <div class="form-group">
             <div class="input-group">
-                <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-outline-warning m-2" onclick="location.href='frmListarClientes.jsp'"/>
-                <input type="button" id="btnRegresar" value="Regresar" class="btn btn-outline-secondary m-2" onclick="location.href='frmListarClientes.jsp'"/>
+                <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-outline-warning m-2" onclick="location.href='frmListarProvedores.jsp'"/>
+                <input type="button" id="btnRegresar" value="Regresar" class="btn btn-outline-secondary m-2" onclick="location.href='frmListarProvedores.jsp'"/>
             </div>
         </div>
                                
@@ -133,21 +118,15 @@
         <script>
             //Cuando el doc este listo
             $(document).ready(function (){
-                $("#form-AgregarModificar").validate({
+                $("#form-AgregarModificar2").validate({
                     rules:{
                       txtNombre:{required:true,maxlength:25},
                       txtTelefono:{required:true,minlength:8,maxlength:11},
-                      txtApellido1:{required:true,maxlength:25},
-                      txtApellido2:{required:true,maxlength:25},
-                      txtCedula:{required:true,maxlength:25},
                       txtCorreo:{required:true,maxlength:25}
                     },
                     messages:{
                         txtNombre:"Campo obligatorio,25 letras maximo",
                         txtTelefono:"Campo obligatorio, maximo 11 y el minimo 8 letras",
-                        txtApellido1:"Campo obligatorio, maximo 25 letras",
-                        txtApellido2:"Campo obligatorio, maximo 25 letras",
-                        txtCedula:"Campo obligatorio, maximo 25 letras",
                         txtCorreo:"Campo obligatorio, maximo 25 letras"
                     },
                     errorElement:'span'
@@ -156,7 +135,8 @@
                 
             });
             
-        </script>
+        </script>    
         
+
     </body>
 </html>
