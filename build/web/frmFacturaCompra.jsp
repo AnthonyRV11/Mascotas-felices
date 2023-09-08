@@ -58,6 +58,7 @@
                 </div>
                 </div>
                 <br>
+                
                 <form action="Facturar" method="post">
                     <div class="form-group float-right">
                         <div class="input-group">
@@ -75,18 +76,46 @@
                                 <i class="fas fa-search"></i>
                             </a>
                         </div>
-         </div>
-        
-        
-        <div id="oculto">
-            
-            
+                        <div class="input-group">
+                            <a id="btnEmpezar" class="btn btn-outline-warning">
+                                Empezar compra
+                            </a>
+                        </div>
+                </form>
         </div>
-            
+       
+        <script>
+            $(document).ready(function() {
+            // Agrega un evento click al botón "btnEmpezar"
+            $("#btnEmpezar").click(function() {
+                // Realiza una solicitud AJAX al servlet "Facturar"
+                $.ajax({
+                    type: "POST", // O el método HTTP que estés utilizando
+                    url: "Facturar", // La URL del servlet
+                    data: {
+                    // Puedes enviar datos adicionales aquí si es necesario
+                    },
+                    success: function(response) {
+                        // Maneja la respuesta del servlet aquí si es necesario
+                        console.log("Solicitud enviada con éxito");
+                    },
+                    error: function() {
+                        // Maneja errores si la solicitud falla
+                        console.error("Error al enviar la solicitud");
+                    }
+                });
+            });
+        });
+        </script>
+
+         <!--Falta de momento solo crear la factura, recuperar el id factura y dejarlo fijo en el espacio para empezar agregar al detalle-->
+         
+        <div id="oculto">
+           
+        </div>
                     
                     
         <!-- Modales-->
-        
         
         <!-- Modal buscar provedor-->
         <div class="modal" id="buscarProvedor" tabindex="1" role="dialog" aria-labelledby="tituloVentana">

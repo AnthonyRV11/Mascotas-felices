@@ -112,12 +112,13 @@
             </table>
             <br>
             <%
-                //Si la variable mensaje tiene algo
-                if(request.getParameter("mensajeEliminarCliente") != null){
-                    out.print("<p class='text-danger'>"+new String
-                    (request.getParameter("mensajeEliminarCliente").getBytes("ISO-8859-1"),"UTF-8"));
-                }
-            %>
+            // Si la variable mensaje tiene algo
+            if (request.getParameter("mensajeEliminarCliente") != null) {
+           %>
+            <p class='text-danger'><%= new String(request.getParameter("mensajeEliminarCliente").getBytes("ISO-8859-1"), "UTF-8") %></p>
+           <%
+            }
+           %>
             <a href="frmProvedores.jsp?idCrearModificar2=-1" class="btn btn-warning">Agregar Provedor</a>
             <a href="frmListarProvedores.jsp" class="btn btn-secondary">Actualizar</a>
             <a href="index.html" class="btn btn-secondary">Regresar</a>
