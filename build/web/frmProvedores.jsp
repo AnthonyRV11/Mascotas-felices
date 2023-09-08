@@ -34,7 +34,7 @@
                             <a class="nav-link text-dark" href="frmListarProvedores.jsp">Provedores</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href=#>Compra</a>
+                            <a class="nav-link text-dark" href=frmFacturaCompra.jsp>Compra</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" href=#>Venta</a>
