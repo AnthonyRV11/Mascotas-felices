@@ -31,7 +31,7 @@ public class ADFacturaCompra {
         
         try {
             _conexion = getcConnection();
-            cs = _conexion.prepareCall("{call CrearFacturaCompra(?.?)}");
+            cs = _conexion.prepareCall("{call CrearFacturaCompra(?,?)}");
             //Parametros de entrada
             cs.setInt(1, cliente.getId_provedor());
             cs.setInt(2, 0);

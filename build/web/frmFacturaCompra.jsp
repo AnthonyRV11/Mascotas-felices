@@ -4,6 +4,9 @@
     Author     : Anthony Rodriguez Valverde 07/09/2023
 --%>
 
+<%@page import="Entidades.Productos"%>
+<%@page import="Logica.LNProductos"%>
+
 <%@page import="java.util.List"%>
 <%@page import="Entidades.Provedores"%>
 <%@page import="Logica.LNProvedores"%>
@@ -59,15 +62,7 @@
                 </div>
                 <br>
                 
-                <form action="Facturar" method="post">
-                    <div class="form-group float-right">
-                        <div class="input-group">
-                            <label for="txtNumFactura" class="form-control">Num factura</label>
-                            <input type="text" id="txtNumFactura" value="" readonly class="form-control"/>
-                        </div>
-                        <br>
-                    </div>
-                    
+                <form action="CrearFacturaCompra" method="post">
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" id="txtIdProvedor" name="txtIdProvedor" value="" readonly class="form-control"/>
@@ -76,48 +71,23 @@
                                 <i class="fas fa-search"></i>
                             </a>
                         </div>
-                        <div class="input-group">
-                            <a id="btnEmpezar" class="btn btn-outline-warning">
-                                Empezar compra
-                            </a>
-                        </div>
+                        <button type="submit" class="btn btn-warning">Empezar compra</button>
                 </form>
         </div>
        
-        <script>
-            $(document).ready(function() {
-            // Agrega un evento click al botón "btnEmpezar"
-            $("#btnEmpezar").click(function() {
-                // Realiza una solicitud AJAX al servlet "Facturar"
-                $.ajax({
-                    type: "POST", // O el método HTTP que estés utilizando
-                    url: "Facturar", // La URL del servlet
-                    data: {
-                    // Puedes enviar datos adicionales aquí si es necesario
-                    },
-                    success: function(response) {
-                        // Maneja la respuesta del servlet aquí si es necesario
-                        console.log("Solicitud enviada con éxito");
-                    },
-                    error: function() {
-                        // Maneja errores si la solicitud falla
-                        console.error("Error al enviar la solicitud");
-                    }
-                });
-            });
-        });
-        </script>
-
-         <!--Falta de momento solo crear la factura, recuperar el id factura y dejarlo fijo en el espacio para empezar agregar al detalle-->
-         
-        <div id="oculto">
+                    <%
+            // Si la variable resultado tiene algo
+            if (request.getParameter("resultado") != null) {
+           %>
+           <div class="input-group">
+                    <label for="txtNumFactura" class="form-control">Num factura</label>
+                    <input type="text" id="txtNumFactura" value="<%= new String(request.getParameter("resultado").getBytes("ISO-8859-1"), "UTF-8") %>" readonly class="form-control"/>
+            </div>
+           <%
+            }
+           %>
            
-        </div>
-                    
-                    
-        <!-- Modales-->
-        
-        <!-- Modal buscar provedor-->
+           <!-- Modal buscar provedor-->
         <div class="modal" id="buscarProvedor" tabindex="1" role="dialog" aria-labelledby="tituloVentana">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -170,6 +140,46 @@
                 </div>
             </div> <!-- Fin del modal dialog-->
         </div> <!-- Fin del modal -->
+        
+
+        <div id="oculto">
+           <div class="container">
+            <div class="row">
+                <div class="col-10">
+                    <h1>Agregar Productos</h1>
+                </div>
+                </div>
+                <br>
+                
+                <form action="" method="post">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" id="txtIdProducto" name="txtIdProducto" value="" readonly class="form-control"/>
+                            <input type="text" id="txtNombreProducto" name="txtNombreProducto" value="" readonly class="form-control" placeholder="Seleccione un producto"/>
+                            <input type="text" id="txtPrecio" name="txtPrecio" value="" readonly class="form-control" placeholder="Seleccione un producto"/>
+                            <input type="text" id="txtCantidad" name="txtCantidad" value="" readonly class="form-control" placeholder="Seleccione un producto"/>
+                            <input type="text" id="txtCantidadCompra" name="txtCantidadCompra" value="" class="form-control" placeholder="Ingrese la cantidad"/>
+                            <a id="btnBuscar2" class="btn btn-outline-warning" data-toggle="modal" data-target="#buscarProductos">
+                                <i class="fas fa-search"></i>
+                            </a>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Agregar</button>
+                </form>
+        </div>
+        </div>
+                    
+        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         
         <!-- Scripts requeridos-->
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
