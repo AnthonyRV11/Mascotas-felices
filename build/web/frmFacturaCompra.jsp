@@ -65,7 +65,7 @@
                 <form action="CrearFacturaCompra" method="post">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" id="txtIdProvedor" name="txtIdProvedor" value="" readonly class="form-control"/>
+                            <input type="text" id="txtIdProvedor" name="txtIdProvedor" value="" readonly class="form-control" placeholder="Id del provedor"/>
                             <input type="text" id="txtNombre" name="txtNombre" value="" readonly class="form-control" placeholder="Seleccione un provedor"/>
                             <a id="btnBuscar" class="btn btn-outline-warning" data-toggle="modal" data-target="#buscarProvedor">
                                 <i class="fas fa-search"></i>
@@ -154,11 +154,11 @@
                 <form action="" method="post">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" id="txtIdProducto" name="txtIdProducto" value="" readonly class="form-control"/>
-                            <input type="text" id="txtNombreProducto" name="txtNombreProducto" value="" readonly class="form-control" placeholder="Seleccione un producto"/>
-                            <input type="text" id="txtPrecio" name="txtPrecio" value="" readonly class="form-control" placeholder="Seleccione un producto"/>
-                            <input type="text" id="txtCantidad" name="txtCantidad" value="" readonly class="form-control" placeholder="Seleccione un producto"/>
-                            <input type="text" id="txtCantidadCompra" name="txtCantidadCompra" value="" class="form-control" placeholder="Ingrese la cantidad"/>
+                            <input type="text" id="txtIdProducto" name="txtIdProducto" value="" readonly class="form-control" placeholder="Id del producto"/>
+                            <input type="text" id="txtNombreProducto" name="txtNombreProducto" value="" readonly class="form-control" placeholder="Nombre del producto"/>
+                            <input type="text" id="txtPrecio" name="txtPrecio" value="" readonly class="form-control" placeholder="Precio del producto"/>
+                            <input type="text" id="txtCantidad" name="txtCantidad" value="" readonly class="form-control" placeholder="Cantidad del producto"/>
+                            <input type="text" id="txtCantidadCompra" name="txtCantidadCompra" value="" class="form-control" placeholder="Ingrese la cantidad que quiere"/>
                             <a id="btnBuscar2" class="btn btn-outline-warning" data-toggle="modal" data-target="#buscarProductos">
                                 <i class="fas fa-search"></i>
                             </a>
@@ -168,8 +168,65 @@
         </div>
         </div>
                     
-        
-            
+        <!-- Modal buscar productos-->
+        <div class="modal" id="buscarProductos" tabindex="1" role="dialog" aria-labelledby="tituloVentana">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="tituloVentana">Buscar producto</h5>
+                        <button class="close" data-dismiss="modal" arial-label="Cerrar" arial-hidden="true" onclick="Limpiar()">
+                            <span aria-hidden="true">&times;</span>
+                            
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tablaProductos">
+                            <thead>
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Existencia</th>
+                                    <th>Seleccionar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    LNProductos logica2 = new LNProductos();
+                                    List<Productos> datos2;
+                                    datos2 = logica2.Listar("");
+                                    
+                                    for(Productos registro:datos2){ 
+                                %>
+                                <tr>
+                                    <%int codigoC = registro.getId();
+                                    String nombreC = registro.getNombre();
+                                    Double precio = registro.getPrecio_Venta();
+                                    int existencia = registro.getCantidad();
+                                    %>
+                                    <td><%=codigoC%></td>
+                                    <td><%=nombreC%></td>
+                                    <td><%=precio%></td>
+                                    <td><%=existencia%></td>
+                                    <td>
+                                        <a href="#" data-dismiss="modal" onclick="SeleccionarProducto('<%= codigoC %>', '<%= nombreC %> ','<%= precio %> ','<%= existencia %> ' )" >Seleccionar</a>
+                                    </td>
+                                    
+                                </tr>
+                                <%}%>
+                                
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline-warning" type="button" data-dismiss="modal" onclick="Limpiar()">
+                                Cancelar
+                            </button>
+                        </div>
+                </div>
+            </div> <!-- Fin del modal dialog-->
+        </div> <!-- Fin del modal -->
             
             
             
@@ -218,6 +275,43 @@
                $("#txtNombre").val("");
            }
            
+           //Limpiar en seleccionar 
+           
+        </script>
+        
+        <script>
+            $(document).ready(function(){
+                $('#tablaProductos').dataTable({
+                    "lengthMenu":[[5,15,15,-1],[5,10,15,"ALL"]],
+                    "language":{
+                        "info":"Pagina _PAGE_ de _PAGES_","infoEmpty": "No hay registros",
+                        "zeroRecords": "No se encuentran registros",
+                        "search": "Buscar",
+                        "infoFiltered": "",
+                        "lengthMenu": "Mostrar _MENU_Registros",
+                        "paginate":{
+                            "first":"Primero",
+                            "last": "Ultimo",
+                            "next": "Siguiente",
+                            "previous":"Anterior"
+                        }
+                    }
+                })
+            });
+           //Seleccionar
+           function SeleccionarProducto(idProducto,nombre,precio,cantidad){
+               $("#txtIdProducto").val(idProducto);
+               $("#txtNombreProducto").val(nombre);
+               $("#txtCantidad").val(cantidad);
+               $("#txtPrecio").val(precio);
+           }
+           
+           function Limpiar(){
+               $("#txtIdProducto").val("");
+               $("#txtNombreProducto").val("");
+               $("#txtCantidad").val("");
+               $("#txtPrecio").val("");
+           }
            //Limpiar en seleccionar 
            
         </script>
