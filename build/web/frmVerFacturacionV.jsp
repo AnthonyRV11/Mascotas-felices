@@ -1,23 +1,22 @@
 <%-- 
-    Document   : frmListarClientes
-    Created on : 06-sep-2023, 11:06:54
+    Document   : frmVerFacturacionV
+    Created on : 10-sep-2023, 13:51:52
     Author     : Anthony Rodriguez Valverde
 --%>
 
-<%@page import="Entidades.Clientes" %>
-<%@page import="Logica.*" %>
-<%@page import="java.util.List" %>
-
+<%@page import="Entidades.FacturaVenta"%>
+<%@page import="java.util.List"%>
+<%@page import="Logica.LNFacturaVenta"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Listado de clientes</title>
-         <!--Bootstrap-->
+        <title>Facturas de ventas</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <!--FontAwesome-->
         <link href="lib/fontawesome-free-5.14.0-web/css/all.min.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/EstilosIndex.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <header>
@@ -53,33 +52,19 @@
         </nav>
     </header>
         
-        <div class="container">
-            <div class="card-header">
-                <h1>Listado de Clientes</h1>
-            </div>
-        </div>
+        <h1>Facturas de compras</h1>
         
         <!--El formulario se carga a si mismo-->
-        <form action="frmListarClientes.jsp" method="post">
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" id="txtNombre" name="txtNombre" placeholder="Buscar por Nombre">
-                    <input type="submit" id="btnBuscar" name="btnBuscar" value="Buscar" class="btn btn-warning">
-                    <br>
-                </div>
-            </div>
+        <form action="frmVerFacturacionV.jsp" method="post">
             
             <!--Encabezado de la tabla-->
             <table class="table">
                 <thead>
                     <tr id="titulos">
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Apellido 1</th>
-                        <th>Apellido 2</th>
-                        <th>Cedula</th>
-                        <th>Telefono</th>
-                        <th>Correo</th>
+                        <th>Codigo</th>
+                        <th>Codigo cliente</th>
+                        <th>Total</th>
+                        <th>Fecha</th>
                     </tr>
                 </thead>
                 
@@ -93,49 +78,31 @@
                             condicion = "NOMBRE LIKE '%" + nombre +" %'";
                         }
                         
-                        LNClientes logica = new LNClientes();
-                        List<Clientes> datos;
-                        datos=logica.ListarClientes_List(condicion);
+                        LNFacturaVenta logica = new LNFacturaVenta();
+                        List<FacturaVenta> datos;
+                        datos=logica.Listar("");
                         
-                        for (Clientes registro : datos) {
+                        for (FacturaVenta registro : datos) {
                     %>
                             <tr>
                                 <!--Termina con ; porque es un bloque de codigo-->
-                                <%int codigo = registro.getId();%>
+                                <%int codigo = registro.getId_factura();%>
                                 <!--No termina con ; porque es una expresion-->
                                 <td><%=codigo%></td>
-                                <td><%=registro.getNombre()%></td>
-                                <td><%=registro.getApellido1()%></td>
-                                <td><%=registro.getApellido2()%></td>
-                                <td><%=registro.getCedula()%></td>
-                                <td><%=registro.getTelefono()%></td>
-                                <td><%=registro.getCorreo()%></td>
-                                <td>
-                                    <a href="frmClientes.jsp?idCrearModificar=<%=codigo%>"><i class="fas fa-user-edit"></i></a>
-                                    <a href="EliminarCliente?idCliente=<%=codigo%>"><i class="fas fa-trash-alt"></i></a>
-                                    
-                                </td>
+                                <td><%=registro.getId_Cliente()%></td>
+                                <td><%=registro.getTotal_pagar()%></td>
+                                <td><%=registro.getFecha()%></td>
 
                             </tr>
                         <%}%>
                 </tbody>
             </table>
             <br>
-           <%
-            // Si la variable mensaje tiene algo
-            if (request.getParameter("mensajeEliminarCliente") != null) {
-           %>
-            <p class='text-danger'><%= new String(request.getParameter("mensajeEliminarCliente").getBytes("ISO-8859-1"), "UTF-8") %></p>
-           <%
-            }
-           %>
-            <a href="frmClientes.jsp?idCrearModificar=-1" class="btn btn-warning">Agregar Cliente</a>
-            <a href="frmListarClientes.jsp" class="btn btn-secondary">Actualizar</a>
-            <a href="index.html" class="btn btn-secondary">Regresar</a>
+            <div style="text-align: center;">
+                <a href="index.html" class="btn btn-secondary">Regresar</a>
+            </div>
         </form>
         
-        <!--SCRIPT Bootstrap-->
-        <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
         
     </body>
 </html>

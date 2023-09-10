@@ -45,7 +45,10 @@
                             <a class="nav-link text-dark" href="frmFacturaVenta.jsp">Venta</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href=#>Facturación</a>
+                            <a class="nav-link text-dark" href="frmVerFacturacionC.jsp">Facturas compra</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="frmVerFacturacionV.jsp">Facturacion ventas</a>
                         </li>
                     </ul>
                 </div>
