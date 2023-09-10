@@ -56,7 +56,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-10">
-                    <h1>Facturacion compra</h1>
+                    <h1>Facturacion venta</h1>
                 </div>
                 </div>
                 <br>
@@ -66,7 +66,7 @@
                         <div class="input-group">
                             <input type="text" id="txtIdCliente" name="txtIdCliente" value="" readonly class="form-control" placeholder="Id del cliente"/>
                             <input type="text" id="txtNombre" name="txtNombre" value="" readonly class="form-control" placeholder="Seleccione un cliente"/>
-                            <a id="btnBuscar" class="btn btn-outline-warning" data-toggle="modal" data-target="#buscarProvedor">
+                            <a id="btnBuscar" class="btn btn-outline-warning" data-toggle="modal" data-target="#buscarCliente">
                                 <i class="fas fa-search"></i>
                             </a>
                         </div>
@@ -86,7 +86,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <table id="tablaCliente">
+                        <table id="tablaClientes">
                             <thead>
                                 <tr>
                                     <th>Codigo</th>

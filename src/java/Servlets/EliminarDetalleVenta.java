@@ -9,7 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-@WebServlet("/EliminarDetalleCompra")
+@WebServlet("/EliminarDetalleVenta")
 public class EliminarDetalleVenta extends HttpServlet {
     
     protected void doGet(HttpServletRequest resquest,HttpServletResponse response) throws ServletException, IOException{
