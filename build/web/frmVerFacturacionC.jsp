@@ -52,7 +52,7 @@
         </nav>
     </header>
         
-        <h1>Facturas de compras</h1>
+        <h1>Facturas de compras</h1>   
         
         <!--El formulario se carga a si mismo-->
         <form action="frmVerFacturacionC.jsp" method="post">

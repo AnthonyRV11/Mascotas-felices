@@ -22,7 +22,7 @@
     </head>
     
     <body>
-         <h1>Agregue detalles a la compra</h1>
+         <h1>Agregue detalles a la venta</h1>
         <div id="oculto">
            <div class="container">
             <div class="row">
@@ -30,7 +30,7 @@
                 </div>
                 </div>
                 <br>             
-                <form action="AgregarDetallesVenta" method="post">
+                <form action="AgregarDetallesVenta" method="post" id="Validando">
 
                     <%
         int resultadoFactura = (Integer) session.getAttribute("resultadoFactura");
@@ -55,7 +55,17 @@
         <i class="fas fa-search"></i>
     </a>
 
-    <button type="submit" class="btn btn-warning">Agregar</button>
+    <button type="submit" class="btn btn-warning">Agregar</button> 
+        <%
+        if (Integer.parseInt(request.getParameter("resultado")) == -1) {
+        %>
+        <script>
+            alert("La cantidad ingresada es mayor a la que hay en existencia!");
+        </script>
+        <%
+        }
+        %>
+        
 </form>
         </div>
         </div>
@@ -185,7 +195,11 @@
         </form>
         </div>
         
+        
+        
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+        <script src="lib/jquery-validation/dist/jquery.validate.js" type="text/javascript"></script>
+        <script src="lib/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
@@ -228,6 +242,31 @@
            //Limpiar en seleccionar 
            
         </script>
+        
+         <script>
+            //Cuando el doc este listo
+            $(document).ready(function (){
+                $("#Validando").validate({
+                    rules:{
+                      txtIdProducto:{required:true},
+                      txtNombreProducto:{required:true},
+                      txtPrecio:{required:true},
+                      txtCantidad:{required:true},
+                      txtCantidadCompra:{required:true,digits: true},
+                    },
+                    messages:{
+                        txtIdProducto:"Campo obligatorio",
+                        txtNombreProducto:"Campo obligatorio",
+                        txtPrecio:"Campo obligatorio",
+                        txtCantidad:"Campo obligatorio",
+                        txtCantidadCompra:"Campo obligatorio, debe de ser un numero entero"
+                    },
+                    errorElement:'span'
+                });
+            });
+            
+        </script>
+        
         
     </body>
 </html>

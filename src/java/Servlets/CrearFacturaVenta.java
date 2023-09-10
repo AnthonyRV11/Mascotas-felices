@@ -39,7 +39,7 @@ public class CrearFacturaVenta extends HttpServlet {
                     mensaje=logica.getMensaje();
                     HttpSession session = request.getSession();
                     session.setAttribute("resultadoFactura", resultado);
-                response.sendRedirect("frmDetalleVenta.jsp?resultado2="+resultado);
+                response.sendRedirect("frmDetalleVenta.jsp?resultado="+resultado);
             }catch(Exception ex){
                 out.print(ex.getMessage());
             }

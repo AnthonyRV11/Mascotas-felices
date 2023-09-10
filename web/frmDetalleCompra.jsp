@@ -29,7 +29,7 @@
                 </div>
                 </div>
                 <br>             
-                <form action="AgregarDetallesCompra" method="post">
+                <form action="AgregarDetallesCompra" method="post" id="Validando">
 
                     <%
         int resultadoFactura = (Integer) session.getAttribute("resultadoFactura");
@@ -185,6 +185,8 @@
                 
         
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+        <script src="lib/jquery-validation/dist/jquery.validate.js" type="text/javascript"></script>
+        <script src="lib/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
@@ -226,6 +228,32 @@
            }
            //Limpiar en seleccionar 
            
+        </script>
+        
+        <script>
+            //Cuando el doc este listo
+            $(document).ready(function (){
+                $("#Validando").validate({
+                    rules:{
+                      txtIdProducto:{required:true},
+                      txtNombreProducto:{required:true},
+                      txtPrecio:{required:true},
+                      txtCantidad:{required:true},
+                      txtCantidadCompra:{required:true,digits: true},
+                    },
+                    messages:{
+                        txtIdProducto:"Campo obligatorio",
+                        txtNombreProducto:"Campo obligatorio",
+                        txtPrecio:"Campo obligatorio",
+                        txtCantidad:"Campo obligatorio",
+                        txtCantidadCompra:"Campo obligatorio, debe de ser un numero entero"
+                    },
+                    errorElement:'span'
+                    
+                });
+                
+            });
+            
         </script>
         
     </body>

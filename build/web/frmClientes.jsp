@@ -132,6 +132,7 @@
         <!<!-- Script de bootstrap -->
         <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+        <script src="lib/jquery-validation/dist/jquery.validate.js" type="text/javascript"></script>
         <script src="lib/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
         <script>
             //Cuando el doc este listo

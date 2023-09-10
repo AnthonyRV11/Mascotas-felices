@@ -64,7 +64,7 @@
                 </div>
                 <br>
                 
-                <form action="CrearFacturaVenta" method="post">
+                <form action="CrearFacturaVenta" method="post" id="Validando">
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" id="txtIdCliente" name="txtIdCliente" value="" readonly class="form-control" placeholder="Id del cliente"/>
@@ -133,6 +133,8 @@
         <!-- Scripts requeridos-->
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+        <script src="lib/jquery-validation/dist/jquery.validate.js" type="text/javascript"></script>
+        <script src="lib/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <script src="lib/DataTables/datatables.min.js" type="text/javascript"></script>
@@ -171,6 +173,23 @@
            
         </script>
         
+    <script>
+        // Cuando el documento esté listo
+        $(document).ready(function () {
+            $("#Validando").validate({
+                rules: {
+                    txtNombre: { required: true },
+                    txtIdCliente: { required: true },
+                },
+                messages: {
+                    txtNombre: "Campo obligatorio!",
+                    txtIdCliente: "Campo obligatorio!",
+                },
+                errorElement: 'span'
+            });
+        });
+    </script>
+
         
     </body>
 </html>
