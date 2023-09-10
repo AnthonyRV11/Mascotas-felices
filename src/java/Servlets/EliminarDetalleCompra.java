@@ -30,7 +30,7 @@ public class EliminarDetalleCompra extends HttpServlet {
             mensaje = URLEncoder.encode(mensaje, "UTF-8");
             //Redireccionamos la padina frmListarClientes
             //y enviamos por parametro mensaje
-            response.sendRedirect("frmFacturaCompra.jsp?mensajeEliminarCliente="+mensaje+"&resultadoEliminar="+resultado);
+            response.sendRedirect("frmDetalleCompra.jsp?mensajeEliminarCliente="+mensaje+"&resultadoEliminar="+resultado);
                         
         }catch(Exception e){
             out.print(e.getMessage());

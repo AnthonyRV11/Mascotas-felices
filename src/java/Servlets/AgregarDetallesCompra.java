@@ -38,7 +38,7 @@ public class AgregarDetallesCompra extends HttpServlet {
                 cliente.setCantidad(Integer.parseInt(request.getParameter("txtCantidadCompra")));
                     resultado = logica.Insertar(cliente);
                     mensaje=logica.getMensaje();
-                response.sendRedirect("frmFacturaCompra.jsp?mensaje="+mensaje+"resultado="+resultado);
+                response.sendRedirect("frmDetalleCompra.jsp?mensaje="+mensaje+"resultado="+resultado);
             }catch(Exception ex){
                 out.print(ex.getMessage());
             }

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 //Anthony Rodriguez Valverde 08/09/2023
 
@@ -36,7 +37,9 @@ public class CrearFacturaCompra extends HttpServlet {
                 cliente.setId_provedor(Integer.parseInt(request.getParameter("txtIdProvedor")));
                     resultado = logica.Insertar(cliente);
                     mensaje=logica.getMensaje();
-                response.sendRedirect("frmFacturaCompra.jsp?resultado="+resultado);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("resultadoFactura", resultado);
+                response.sendRedirect("frmDetalleCompra.jsp?resultado2="+resultado);
             }catch(Exception ex){
                 out.print(ex.getMessage());
             }
