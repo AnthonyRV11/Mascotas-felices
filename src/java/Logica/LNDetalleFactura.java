@@ -16,7 +16,7 @@ public class LNDetalleFactura {
     }
     
      //llamar insertar de acceso a datos
-    public int InsertarCliente(DetalleFacturaCompra cliente) throws Exception{
+    public int Insertar(DetalleFacturaCompra cliente) throws Exception{
         int id=-1;
         ADDetalleCompra adcliente;
         try {

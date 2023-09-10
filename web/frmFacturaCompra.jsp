@@ -4,6 +4,8 @@
     Author     : Anthony Rodriguez Valverde 07/09/2023
 --%>
 
+<%@page import="Entidades.DetalleFacturaCompra"%>
+<%@page import="Logica.LNDetalleFactura"%>
 <%@page import="Entidades.Productos"%>
 <%@page import="Logica.LNProductos"%>
 
@@ -74,19 +76,18 @@
                         <button type="submit" class="btn btn-warning">Empezar compra</button>
                 </form>
         </div>
-       
+                     <%
+                    // Si la variable resultado tiene algo
+                    if (request.getParameter("resultado") != null) {
+                    %>
+                    <div class="input-group">
+                        <label for="" class="form-control">Num factura</label>
+                        <input type="text" id="txtNumFactura" value="<%= new String(request.getParameter("resultado").getBytes("ISO-8859-1"), "UTF-8") %>" readonly class="form-control"/>
+                    </div>
                     <%
-            // Si la variable resultado tiene algo
-            if (request.getParameter("resultado") != null) {
-           %>
-           <div class="input-group">
-                    <label for="txtNumFactura" class="form-control">Num factura</label>
-                    <input type="text" id="txtNumFactura" value="<%= new String(request.getParameter("resultado").getBytes("ISO-8859-1"), "UTF-8") %>" readonly class="form-control"/>
-            </div>
-           <%
-            }
-           %>
-           
+                    }
+                    %>
+       
            <!-- Modal buscar provedor-->
         <div class="modal" id="buscarProvedor" tabindex="1" role="dialog" aria-labelledby="tituloVentana">
             <div class="modal-dialog" role="document">
@@ -149,22 +150,24 @@
                     <h1>Agregar Productos</h1>
                 </div>
                 </div>
-                <br>
-                
-                <form action="" method="post">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" id="txtIdProducto" name="txtIdProducto" value="" readonly class="form-control" placeholder="Id del producto"/>
-                            <input type="text" id="txtNombreProducto" name="txtNombreProducto" value="" readonly class="form-control" placeholder="Nombre del producto"/>
-                            <input type="text" id="txtPrecio" name="txtPrecio" value="" readonly class="form-control" placeholder="Precio del producto"/>
-                            <input type="text" id="txtCantidad" name="txtCantidad" value="" readonly class="form-control" placeholder="Cantidad del producto"/>
-                            <input type="text" id="txtCantidadCompra" name="txtCantidadCompra" value="" class="form-control" placeholder="Ingrese la cantidad que quiere"/>
-                            <a id="btnBuscar2" class="btn btn-outline-warning" data-toggle="modal" data-target="#buscarProductos">
-                                <i class="fas fa-search"></i>
-                            </a>
-                        </div>
-                        <button type="submit" class="btn btn-warning">Agregar</button>
-                </form>
+                <br>             
+                <form action="AgregarDetallesCompra" method="post">
+    <% if (request.getParameter("resultado") != null) { %>
+    <input type="hidden" name="txtNumFactura" value="<%= request.getParameter("resultado") %>">
+    <% } %>
+
+    <!-- Otros campos del formulario -->
+    <input type="text" id="txtIdProducto" name="txtIdProducto" value="" readonly class="form-control" placeholder="Id del producto"/>
+    <input type="text" id="txtNombreProducto" name="txtNombreProducto" value="" readonly class="form-control" placeholder="Nombre del producto"/>
+    <input type="text" id="txtPrecio" name="txtPrecio" value="" readonly class="form-control" placeholder="Precio del producto"/>
+    <input type="text" id="txtCantidad" name="txtCantidad" value="" readonly class="form-control" placeholder="Cantidad del producto"/>
+    <input type="text" id="txtCantidadCompra" name="txtCantidadCompra" value="" class="form-control" placeholder="Ingrese la cantidad que quiere"/>
+    <a id="btnBuscar2" class="btn btn-outline-warning" data-toggle="modal" data-target="#buscarProductos">
+        <i class="fas fa-search"></i>
+    </a>
+
+    <button type="submit" class="btn btn-warning">Agregar</button>
+</form>
         </div>
         </div>
                     
@@ -228,16 +231,58 @@
             </div> <!-- Fin del modal dialog-->
         </div> <!-- Fin del modal -->
             
+        <div id="TablaDetalle">
+             <!--El formulario se carga a si mismo-->
+        <form action="frmFacturaCompra.jsp" method="post">
+            
+            <!--Encabezado de la tabla-->
+            <table class="table">
+                <thead>
+                    <tr id="titulos">
+                        <th>Código detalle</th>
+                        <th>Codigo factura</th>
+                        <th>Codigo producto</th>
+                        <th>Cantidad ingresada</th>
+                        <th>Fecha compra</th>
+                        <th>Hora compra</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <%
+                        String condicion = request.getParameter("txtNumFactura");
+                        LNDetalleFactura logica3 = new LNDetalleFactura();
+                        List<DetalleFacturaCompra> datos3;
+                        datos3=logica3.Listar(condicion);
+                        
+                        for (DetalleFacturaCompra registro : datos3) {
+                    %>
+                            <tr>
+                                <!--Termina con ; porque es un bloque de codigo-->
+                                <%int codigo = registro.getId_Detalle();%>
+                                <!--No termina con ; porque es una expresion-->
+                                <td><%=codigo%></td>
+                                <td><%=registro.getId_factura()%></td>
+                                <td><%=registro.getId_producto()%></td>
+                                <td><%=registro.getCantidad()%></td>
+                                <td><%=registro.getFechaVenta()%></td>
+                                <td><%=registro.getVenta()%></td>
+                                <td>
+                                    <a href="EliminarDetalleCompra?idDetalle=<%=codigo%>"><i class="fas fa-trash-alt"></i></a>  
+                                </td>
+
+                            </tr>
+                        <%}%>
+                </tbody>
+            </table>
+            <br>
+            <a href="frmFacturaCompra.jsp" class="btn btn-warning">Finalizar Compra</a>
+        </form>
+            
+        </div>
             
             
-            
-            
-            
-            
-            
-            
-            
-        
         <!-- Scripts requeridos-->
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
