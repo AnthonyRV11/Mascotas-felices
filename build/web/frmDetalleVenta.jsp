@@ -1,11 +1,11 @@
 <%-- 
-    Document   : frmDetalleCompra
-    Created on : 10-sep-2023, 1:01:24
+    Document   : frmDetalleVenta
+    Created on : 10-sep-2023, 10:48:10
     Author     : Anthony Rodriguez Valverde 07/09/2023
 --%>
 <%@page import="java.util.List"%>
-<%@page import="Entidades.DetalleFacturaCompra"%>
-<%@page import="Logica.LNDetalleFactura"%>
+<%@page import="Entidades.DetalleFacturaVenta"%>
+<%@page import="Logica.LNDetalleFacturaV"%>
 <%@page import="Entidades.Productos"%>
 <%@page import="Logica.LNProductos"%>
 
@@ -20,8 +20,9 @@
         <link href="lib/fontawesome-free-5.14.0-web/css/all.min.css" rel="stylesheet" type="text/css"/>
         <link href="lib/DataTables/datatables.min.css" rel="stylesheet" type="text/css"/>
     </head>
+    
     <body>
-        <h1>Agregue detalles a la compra</h1>
+         <h1>Agregue detalles a la compra</h1>
         <div id="oculto">
            <div class="container">
             <div class="row">
@@ -29,7 +30,7 @@
                 </div>
                 </div>
                 <br>             
-                <form action="AgregarDetallesCompra" method="post">
+                <form action="AgregarDetallesVenta" method="post">
 
                     <%
         int resultadoFactura = (Integer) session.getAttribute("resultadoFactura");
@@ -58,8 +59,9 @@
 </form>
         </div>
         </div>
-                    
-        <!-- Modal buscar productos-->
+        
+        
+         <!-- Modal buscar productos-->
         <div class="modal" id="buscarProductos" tabindex="1" role="dialog" aria-labelledby="tituloVentana">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -121,7 +123,7 @@
         
         <div id="TablaDetalle">
              <!--El formulario se carga a si mismo-->
-        <form action="frmDetalleCompra.jsp" method="post">
+        <form action="frmDetalleVenta.jsp" method="post">
             
             <!--Encabezado de la tabla-->
             <table class="table">
@@ -142,11 +144,11 @@
                         Integer condicion2 = (Integer) session.getAttribute("resultadoFactura");
                         String condicion = "ID_FACTURA = " + condicion2;
 
-                        LNDetalleFactura logica3 = new LNDetalleFactura();
-                        List<DetalleFacturaCompra> datos3;
+                        LNDetalleFacturaV logica3 = new LNDetalleFacturaV();
+                        List<DetalleFacturaVenta> datos3;
                         datos3=logica3.Listar(condicion);
                         
-                        for (DetalleFacturaCompra registro : datos3) {
+                        for (DetalleFacturaVenta registro : datos3) {
                     %>
                             <tr>
                                 <!--Termina con ; porque es un bloque de codigo-->
@@ -159,7 +161,7 @@
                                 <td><%=registro.getFechaVenta()%></td>
                                 <td><%=registro.getVenta()%></td>
                                 <td>
-                                    <a href="EliminarDetalleCompra?idDetalle=<%=codigo%>"><i class="fas fa-trash-alt"></i></a>  
+                                    <a href="EliminarDetalleVenta?idDetalle=<%=codigo%>"><i class="fas fa-trash-alt"></i></a>  
                                 </td>
 
                             </tr>
@@ -170,7 +172,7 @@
                     Integer condicion3 = (Integer) session.getAttribute("resultadoFactura");
                     String condicionP = "ID_FACTURA = " + condicion3;
 
-                    LNDetalleFactura logica4 = new LNDetalleFactura();
+                    LNDetalleFacturaV logica4 = new LNDetalleFacturaV();
                     double precio = logica4.Precio(condicionP);
                 %>
 
@@ -179,10 +181,9 @@
 
                 
             <br>
-            <a href="frmFacturaCompra.jsp" class="btn btn-warning">Finalizar Compra</a>
+            <a href="frmFacturaVenta.jsp" class="btn btn-warning">Finalizar Compra</a>
         </form>
         </div>
-                
         
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
@@ -190,8 +191,8 @@
         <script src="lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <script src="lib/DataTables/datatables.min.js" type="text/javascript"></script>
         <script src="lib/DataTables/DataTables-1.10.21/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
-        
-         <script>
+         
+        <script>
             $(document).ready(function(){
                 $('#tablaProductos').dataTable({
                     "lengthMenu":[[5,15,15,-1],[5,10,15,"ALL"]],

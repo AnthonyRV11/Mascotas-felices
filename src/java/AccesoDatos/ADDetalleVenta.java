@@ -1,18 +1,15 @@
 package AccesoDatos;
 
 //Anthony Rodriguez Valverde 08/09/2023
-
 import static AccesoDatos.ClaseConexion.getcConnection;
-import Entidades.DetalleFacturaCompra;
+import Entidades.DetalleFacturaVenta;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Types;
-
-public class ADDetalleCompra {
+public class ADDetalleVenta {
     //Atributos
     private String _mensaje;
     
@@ -21,27 +18,27 @@ public class ADDetalleCompra {
         return _mensaje;
     }
     //constructor
-    public ADDetalleCompra(){
+    public ADDetalleVenta(){
         _mensaje="";
     }
     
      //listar 
-    public List<DetalleFacturaCompra> Listar(String condicion) throws Exception{
+    public List<DetalleFacturaVenta> Listar(String condicion) throws Exception{
         ResultSet rs=null;
-        DetalleFacturaCompra cliente;
-        List<DetalleFacturaCompra> lista = new ArrayList();
+        DetalleFacturaVenta cliente;
+        List<DetalleFacturaVenta> lista = new ArrayList();
         Connection _conexion=null;
         try {
             //abrir la coneccion
             _conexion= ClaseConexion.getcConnection();
             Statement stm = _conexion.createStatement();
-            String sentencia = "SELECT ID_DETALLE_FACTURA_COMPRA,ID_FACTURA,ID_PRODUCTO,CANTIDAD_PRODUCTO,FECHA_VENTA,HORA FROM DETALLE_FACTURA_COMPRA";
+            String sentencia = "SELECT ID_DETALLE_FACTURA_VENTA,ID_FACTURA,ID_PRODUCTO,CANTIDAD_PRODUCTO,FECHA_VENTA,HORA FROM DETALLE_FACTURA_VENTA";
             if(!condicion.equals("")){
                 sentencia = String.format("%s where %s" , sentencia, condicion);
             }
             rs=stm.executeQuery(sentencia);
             while(rs.next()){
-                cliente = new DetalleFacturaCompra(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getDate(5),rs.getTime(6));
+                cliente = new DetalleFacturaVenta(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getDate(5),rs.getTime(6));
                 lista.add(cliente);
             }
         } catch (Exception ex) {throw ex;}
@@ -54,14 +51,14 @@ public class ADDetalleCompra {
     }//Listar
     
     //Metodo para ingresar 
-    public int Ingresar(DetalleFacturaCompra cliente) throws Exception{
+    public int Ingresar(DetalleFacturaVenta cliente) throws Exception{
         int resultado = -1;
         CallableStatement cs = null;
         Connection _conexion =null;
         
         try {
             _conexion = getcConnection();
-            cs = _conexion.prepareCall("{call InsertarDetalleFacturaCompra(?,?,?)}");
+            cs = _conexion.prepareCall("{call InsertarDetalleFacturaVenta(?,?,?)}");
             //Parametros de entrada
             cs.setInt(1, cliente.getId_factura());
             cs.setInt(2, cliente.getId_producto());
@@ -83,14 +80,14 @@ public class ADDetalleCompra {
     }//Metodo para ingresar
     
     //Eliminar
-    public int Eliminar(DetalleFacturaCompra cliente) throws Exception {
+    public int Eliminar(DetalleFacturaVenta cliente) throws Exception {
         CallableStatement CS = null;
         int resultado = 0;
         Connection _conexion = null;
         try{
             _conexion = getcConnection();
             //registrar parametros
-            CS = _conexion.prepareCall("{call EliminarDetalleFacturaCompra(?)}");
+            CS = _conexion.prepareCall("{call EliminarDetalleFacturaVenta(?)}");
             CS.setInt(1, cliente.getId_Detalle());
             //Parametros de salida 
             //CS.registerOutParameter(2, Types.VARCHAR);
@@ -108,7 +105,8 @@ public class ADDetalleCompra {
         return resultado;
     }
     
-  public double Precio(String condicion) throws Exception {
+    //Precio
+    public double Precio(String condicion) throws Exception {
     ResultSet rs = null;
     Connection _conexion = null;
     double precio = -1;
@@ -116,7 +114,7 @@ public class ADDetalleCompra {
         // Abrir la conexión
         _conexion = ClaseConexion.getcConnection();
         Statement stm = _conexion.createStatement();
-        String sentencia = "SELECT TOTAL_PAGO FROM FACTURA_COMPRA WHERE " + condicion;
+        String sentencia = "SELECT TOTAL_PAGO FROM FACTURA_VENTA WHERE " + condicion;
         rs = stm.executeQuery(sentencia);
         if (rs.next()) {
             precio = rs.getDouble("TOTAL_PAGO");
@@ -131,6 +129,6 @@ public class ADDetalleCompra {
         }
     }
     return precio;
-}
+    }
     
-}//Fin de la clase ADDetalleCompra
+}//Fin de la clase ADDetalleVenta

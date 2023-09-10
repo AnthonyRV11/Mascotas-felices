@@ -166,11 +166,23 @@
                         <%}%>
                 </tbody>
             </table>
+                <%
+                    Integer condicion3 = (Integer) session.getAttribute("resultadoFactura");
+                    String condicionP = "ID_FACTURA = " + condicion3;
+
+                    LNDetalleFactura logica4 = new LNDetalleFactura();
+                    double precio = logica4.Precio(condicionP);
+                %>
+
+        <h3>Precio:</h3>
+        <p><%= precio %></p>
+
+                
             <br>
             <a href="frmFacturaCompra.jsp" class="btn btn-warning">Finalizar Compra</a>
         </form>
-            
         </div>
+                
         
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>

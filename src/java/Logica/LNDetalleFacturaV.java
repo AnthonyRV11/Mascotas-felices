@@ -2,12 +2,12 @@ package Logica;
 
 //Anthony Rodriguez Valverde 09/09/2023
 
-import AccesoDatos.ADDetalleCompra;
-import Entidades.DetalleFacturaCompra;
+import AccesoDatos.ADDetalleVenta;
+import Entidades.DetalleFacturaVenta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LNDetalleFactura {
+public class LNDetalleFacturaV {
     //Atributos
     private String _mensaje;
     
@@ -16,11 +16,11 @@ public class LNDetalleFactura {
     }
     
      //llamar insertar de acceso a datos
-    public int Insertar(DetalleFacturaCompra cliente) throws Exception{
+    public int Insertar(DetalleFacturaVenta cliente) throws Exception{
         int id=-1;
-        ADDetalleCompra adcliente;
+        ADDetalleVenta adcliente;
         try {
-            adcliente= new ADDetalleCompra();
+            adcliente= new ADDetalleVenta();
             id=adcliente.Ingresar(cliente);
             _mensaje=adcliente.getMensaje();
         } catch (Exception ex) {
@@ -29,11 +29,11 @@ public class LNDetalleFactura {
         return id;
     }//Fin Insertar 
     
-    public List<DetalleFacturaCompra> Listar(String condicion) throws Exception{
-        List<DetalleFacturaCompra> resultado = new ArrayList();
-        ADDetalleCompra adcliente;
+    public List<DetalleFacturaVenta> Listar(String condicion) throws Exception{
+        List<DetalleFacturaVenta> resultado = new ArrayList();
+        ADDetalleVenta adcliente;
         try {
-            adcliente=new ADDetalleCompra();
+            adcliente=new ADDetalleVenta();
            resultado = adcliente.Listar(condicion);
         } catch (Exception e) {
             throw e;
@@ -41,26 +41,26 @@ public class LNDetalleFactura {
         return resultado;
    }//Listar
     
-    //ELIMINAR 
-    public int Eliminar(DetalleFacturaCompra cliente) throws Exception{
-        ADDetalleCompra adcliente;
+   //ELIMINAR 
+    public int Eliminar(DetalleFacturaVenta cliente) throws Exception{
+        ADDetalleVenta adcliente;
         int resultado =-1;
         try {
-            adcliente=new ADDetalleCompra();
+            adcliente=new ADDetalleVenta();
             resultado=adcliente.Eliminar(cliente);
             _mensaje=adcliente.getMensaje();
         } catch (Exception e) {
             throw e;
         }
         return resultado;
-    }//Eliminar 
+    }//Eliminar  
     
-    //Precio
+     //Precio
     public double Precio(String condicion) throws Exception{
-        ADDetalleCompra adcliente;
+        ADDetalleVenta adcliente;
         double resultado =-1;
         try {
-            adcliente=new ADDetalleCompra();
+            adcliente=new ADDetalleVenta();
             resultado=adcliente.Precio(condicion);
             _mensaje=adcliente.getMensaje();
         } catch (Exception e) {
@@ -68,5 +68,5 @@ public class LNDetalleFactura {
         }
         return resultado;
     }//Precio 
-
-}//Fin de la clase LNDetalleFactura
+    
+}//Fin de la clase LNDetalleFacturaV

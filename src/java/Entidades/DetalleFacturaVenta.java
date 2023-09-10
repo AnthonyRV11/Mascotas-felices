@@ -26,6 +26,16 @@ public class DetalleFacturaVenta {
         this.Venta = Venta;
     }
     
+     //Constructores
+    public DetalleFacturaVenta(int id_Detalle, int id_factura, int id_producto, int cantidad, Date fechaVenta, Time Venta) {
+        this.id_Detalle = id_Detalle;
+        this.id_factura = id_factura;
+        this.id_producto = id_producto;
+        this.cantidad = cantidad;
+        this.fechaVenta = fechaVenta;
+        this.Venta = Venta;
+    }
+    
     public DetalleFacturaVenta() {
         this.id_Detalle = 0;
         this.id_factura = 0;

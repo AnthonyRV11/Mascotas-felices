@@ -1,32 +1,29 @@
 <%-- 
-    Document   : frmFacturaCompra
-    Created on : 07-sep-2023, 17:42:14
-    Author     : Anthony Rodriguez Valverde 07/09/2023
+    Document   : frmFacturaVenta
+    Created on : 10-sep-2023, 10:37:29
+    Author     : Anthony Rodriguez Valverde
 --%>
-
-<%@page import="Entidades.DetalleFacturaCompra"%>
-<%@page import="Logica.LNDetalleFactura"%>
+<%@page import="Entidades.DetalleFacturaVenta"%>
+<%@page import="Logica.LNDetalleFacturaV"%>
 <%@page import="Entidades.Productos"%>
 <%@page import="Logica.LNProductos"%>
 
 <%@page import="java.util.List"%>
-<%@page import="Entidades.Provedores"%>
-<%@page import="Logica.LNProvedores"%>
+<%@page import="Entidades.Clientes"%>
+<%@page import="Logica.LNClientes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Realizar Compra</title>
+        <title>Realizar Venta</title>
         <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" type="text/css"/>
         <link href="lib/fontawesome-free-5.14.0-web/css/all.min.css" rel="stylesheet" type="text/css"/>
         <link href="lib/DataTables/datatables.min.css" rel="stylesheet" type="text/css"/>
-
     </head>
     <body>
-        
-    <header>
+         <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" href="index.html">Mascotas felices<i class="fas fa-tasks"></i></a>
@@ -56,7 +53,7 @@
         </nav>
     </header>
         
-       <div class="container">
+        <div class="container">
             <div class="row">
                 <div class="col-10">
                     <h1>Facturacion compra</h1>
@@ -64,11 +61,11 @@
                 </div>
                 <br>
                 
-                <form action="CrearFacturaCompra" method="post">
+                <form action="CrearFacturaVenta" method="post">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" id="txtIdProvedor" name="txtIdProvedor" value="" readonly class="form-control" placeholder="Id del provedor"/>
-                            <input type="text" id="txtNombre" name="txtNombre" value="" readonly class="form-control" placeholder="Seleccione un provedor"/>
+                            <input type="text" id="txtIdCliente" name="txtIdCliente" value="" readonly class="form-control" placeholder="Id del cliente"/>
+                            <input type="text" id="txtNombre" name="txtNombre" value="" readonly class="form-control" placeholder="Seleccione un cliente"/>
                             <a id="btnBuscar" class="btn btn-outline-warning" data-toggle="modal" data-target="#buscarProvedor">
                                 <i class="fas fa-search"></i>
                             </a>
@@ -76,20 +73,20 @@
                         <button type="submit" class="btn btn-warning">Empezar compra</button>
                 </form>
         </div>
-       
+                    
            <!-- Modal buscar provedor-->
-        <div class="modal" id="buscarProvedor" tabindex="1" role="dialog" aria-labelledby="tituloVentana">
+        <div class="modal" id="buscarCliente" tabindex="1" role="dialog" aria-labelledby="tituloVentana">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 id="tituloVentana">Buscar provedor</h5>
+                        <h5 id="tituloVentana">Buscar cliente</h5>
                         <button class="close" data-dismiss="modal" arial-label="Cerrar" arial-hidden="true" onclick="Limpiar()">
                             <span aria-hidden="true">&times;</span>
                             
                         </button>
                     </div>
                     <div class="modal-body">
-                        <table id="tablaProvedores">
+                        <table id="tablaCliente">
                             <thead>
                                 <tr>
                                     <th>Codigo</th>
@@ -99,11 +96,11 @@
                             </thead>
                             <tbody>
                                 <%
-                                    LNProvedores logica = new LNProvedores();
-                                    List<Provedores> datos;
-                                    datos = logica.Listar("");
+                                    LNClientes logica = new LNClientes();
+                                    List<Clientes> datos;
+                                    datos = logica.ListarClientes_List("");
                                     
-                                    for(Provedores registro:datos){ 
+                                    for(Clientes registro:datos){ 
                                 %>
                                 <tr>
                                     <%int codigoC = registro.getId();
@@ -112,7 +109,7 @@
                                     <td><%=codigoC%></td>
                                     <td><%=nombreC%></td>
                                     <td>
-                                        <a href="#" data-dismiss="modal" onclick="SeleccionarProvedor('<%= codigoC %>', '<%= nombreC %> ')" >Seleccionar</a>
+                                        <a href="#" data-dismiss="modal" onclick="SeleccionarCliente('<%= codigoC %>', '<%= nombreC %> ')" >Seleccionar</a>
                                     </td>
                                     
                                 </tr>
@@ -128,8 +125,8 @@
                         </div>
                 </div>
             </div> <!-- Fin del modal dialog-->
-        </div> <!-- Fin del modal -->
-            
+        </div> <!-- Fin del modal -->      
+        
         <!-- Scripts requeridos-->
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
@@ -139,7 +136,7 @@
         <script src="lib/DataTables/DataTables-1.10.21/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
         <script>
             $(document).ready(function(){
-                $('#tablaProvedores').dataTable({
+                $('#tablaClientes').dataTable({
                     "lengthMenu":[[5,15,15,-1],[5,10,15,"ALL"]],
                     "language":{
                         "info":"Pagina _PAGE_ de _PAGES_","infoEmpty": "No hay registros",
@@ -157,19 +154,20 @@
                 })
             });
            //Seleccionar
-           function SeleccionarProvedor(idProvedor,nombre){
-               $("#txtIdProvedor").val(idProvedor);
+           function SeleccionarCliente(idProvedor,nombre){
+               $("#txtIdCliente").val(idProvedor);
                $("#txtNombre").val(nombre);
            }
            
            function Limpiar(){
-               $("#txtIdProvedor").val("");
+               $("#txtIdCliente").val("");
                $("#txtNombre").val("");
            }
            
            //Limpiar en seleccionar 
            
         </script>
-
+        
+        
     </body>
 </html>

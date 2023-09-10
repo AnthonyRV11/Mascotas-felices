@@ -1,17 +1,28 @@
 package Entidades;
 
 //Anthony Rodriguez Valverde 24/08/2023
+
+import java.sql.Date;
+
 public class FacturaVenta {
      //Atributos
     int id_factura;
     int id_cliente;
     double total_pagar;
+    Date fecha;
     
     //Constructores
     public FacturaVenta(int id_factura, int id_cliente, double total_pagar) {
         this.id_factura = id_factura;
         this.id_cliente = id_cliente;
         this.total_pagar = total_pagar;
+    }
+    
+      public FacturaVenta(int id_factura, int id_provedor, double total_pagar,Date fecha) {
+        this.id_factura = id_factura;
+        this.id_cliente = id_provedor;
+        this.total_pagar = total_pagar;
+        this.fecha = fecha;
     }
     
     public FacturaVenta() {
@@ -46,7 +57,13 @@ public class FacturaVenta {
     public void setTotal_pagar(double total_pagar) {
         this.total_pagar = total_pagar;
     }
-
     
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
     
 }//Fin de la clase
