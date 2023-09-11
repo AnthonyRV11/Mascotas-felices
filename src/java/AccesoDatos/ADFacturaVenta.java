@@ -64,13 +64,16 @@ public class ADFacturaVenta {
             //abrir la coneccion
             _conexion= ClaseConexion.getcConnection();
             Statement stm = _conexion.createStatement();
-            String sentencia = "SELECT ID_FACTURA,ID_CLIENTE,TOTAL_PAGO,FECHA_VENTA FROM FACTURA_VENTA";
+            String sentencia = "SELECT F.ID_FACTURA, F.ID_CLIENTE, CONCAT(C.NOMBRE, ' ', C.APELLIDO1, ' ', C.APELLIDO2) AS NOMBRE_CLIENTE, F.TOTAL_PAGO, F.                                             FECHA_VENTA\n" +
+                               "FROM FACTURA_VENTA F\n" +
+                               "INNER JOIN CLIENTES C ON F.ID_CLIENTE = C.ID_CLIENTE\n" +
+                               "WHERE F.TOTAL_PAGO IS NOT NULL AND F.TOTAL_PAGO <> 0;";
             if(!condicion.equals("")){
                 sentencia = String.format("%s where %s" , sentencia, condicion);
             }
             rs=stm.executeQuery(sentencia);
             while(rs.next()){
-                cliente = new FacturaVenta(rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getDate(4));
+                cliente = new FacturaVenta(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getDouble(4),rs.getDate(5));
                 lista.add(cliente);
             }
         } catch (Exception ex) {throw ex;}

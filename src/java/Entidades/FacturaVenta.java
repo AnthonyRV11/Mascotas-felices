@@ -10,6 +10,7 @@ public class FacturaVenta {
     int id_cliente;
     double total_pagar;
     Date fecha;
+    String nombre;
     
     //Constructores
     public FacturaVenta(int id_factura, int id_cliente, double total_pagar) {
@@ -18,11 +19,19 @@ public class FacturaVenta {
         this.total_pagar = total_pagar;
     }
     
-      public FacturaVenta(int id_factura, int id_provedor, double total_pagar,Date fecha) {
+    public FacturaVenta(int id_factura, int id_provedor, double total_pagar,Date fecha) {
         this.id_factura = id_factura;
         this.id_cliente = id_provedor;
         this.total_pagar = total_pagar;
         this.fecha = fecha;
+    }
+      
+    public FacturaVenta(int id_factura, int id_provedor,String nombre,double total_pagar,Date fecha) {
+        this.id_factura = id_factura;
+        this.id_cliente = id_provedor;
+        this.total_pagar = total_pagar;
+        this.fecha = fecha;
+        this.nombre = nombre;
     }
     
     public FacturaVenta() {
@@ -64,6 +73,14 @@ public class FacturaVenta {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
     
 }//Fin de la clase

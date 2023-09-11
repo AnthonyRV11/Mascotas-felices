@@ -63,13 +63,16 @@ public class ADFacturaCompra {
             //abrir la coneccion
             _conexion= ClaseConexion.getcConnection();
             Statement stm = _conexion.createStatement();
-            String sentencia = "SELECT ID_FACTURA,ID_PROVEEDOR,TOTAL_PAGO,FECHA_VENTA FROM FACTURA_COMPRA";
+            String sentencia = "SELECT F.ID_FACTURA, F.ID_PROVEEDOR, P.NOMBRE AS NOMBRE_PROVEEDOR, F.TOTAL_PAGO, F.FECHA_VENTA\n" +
+                                "FROM FACTURA_COMPRA F\n" +
+                                "INNER JOIN PROVEEDORES P ON F.ID_PROVEEDOR = P.ID_PROVEEDOR\n" +
+                                "WHERE F.TOTAL_PAGO IS NOT NULL AND F.TOTAL_PAGO <> 0;";
             if(!condicion.equals("")){
                 sentencia = String.format("%s where %s" , sentencia, condicion);
             }
             rs=stm.executeQuery(sentencia);
             while(rs.next()){
-                cliente = new FacturaCompra(rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getDate(4));
+                cliente = new FacturaCompra(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getDouble(4),rs.getDate(5));
                 lista.add(cliente);
             }
         } catch (Exception ex) {throw ex;}
