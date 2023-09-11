@@ -151,11 +151,6 @@
             
         </script>    
         
-        <footer class="border-top">
-        <div class="container">
-            &copy; Proyecto Mascotas felices
-        </div>
-        </footer>
 
     </body>
 </html>
