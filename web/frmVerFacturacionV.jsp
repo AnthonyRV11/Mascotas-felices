@@ -61,7 +61,7 @@
         </nav>
     </header>
         
-        <h1>Facturas de compras</h1>
+        <h1>Facturas de ventas</h1>
         
         <!--El formulario se carga a si mismo-->
         <form action="frmVerFacturacionV.jsp" method="post">
